@@ -4,3 +4,5 @@ export type RestaurantEntity = {
   slug: string;
   createdAt: string;
 };
+
+export type CreateRestaurantEntity = Pick<RestaurantEntity, "id" | "name" | "slug">;

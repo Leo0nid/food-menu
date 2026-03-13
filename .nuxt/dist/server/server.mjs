@@ -1,1 +1,1 @@
-export { default } from "file:///C:/Users/user/Desktop/Practrices/food/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs"
+export { default } from "file:///C:/Users/user/Desktop/Practrices/food-menu/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs"

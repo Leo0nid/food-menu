@@ -3,40 +3,40 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/@vue/shared/dist/shared.cjs.js';
-import Database from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/better-sqlite3/lib/index.js';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/@vue/shared/dist/shared.cjs.js';
+import Database from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/better-sqlite3/lib/index.js';
 import { promises, existsSync, mkdirSync } from 'node:fs';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/destr/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/devalue/index.js';
-import { isVNode, isRef, toValue } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/vue/index.mjs';
-import { createHooks } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/radix3/dist/index.mjs';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/devalue/index.js';
+import { isVNode, isRef, toValue } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue/index.mjs';
+import { createHooks } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/errx/dist/index.js';
+import { getContext } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/errx/dist/index.js';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://C:/Users/user/Desktop/Practrices/food/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/user/Desktop/Practrices/food/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Users/user/Desktop/Practrices/food-menu/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -48,11 +48,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/user/Desktop/Practrices/food/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food-menu","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food-menu/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food-menu/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food-menu/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/user/Desktop/Practrices/food-menu/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -2020,13 +2020,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _V5qZAJ3ZZjsWfI5eVezBm6WsaLrSRQ7kz9vfrqvZo = (function(nitro) {
+const _WAxTQJWAzagHFuNzCfJUkH6dseAZZOgxIrt5Qq2d6PY = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "C:/Users/user/Desktop/Practrices/food";
+const rootDir = "C:/Users/user/Desktop/Practrices/food-menu";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -2055,7 +2055,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _mjWock8rmihOXc1R7fTAR82utFuYViyU_oBGLiHKRNw = (nitroApp) => {
+const _Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2129,26 +2129,11 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _V5qZAJ3ZZjsWfI5eVezBm6WsaLrSRQ7kz9vfrqvZo,
-_mjWock8rmihOXc1R7fTAR82utFuYViyU_oBGLiHKRNw
+  _WAxTQJWAzagHFuNzCfJUkH6dseAZZOgxIrt5Qq2d6PY,
+_Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU
 ];
 
-const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1bc35-e7YcPTfIEKboCBpKAHirsjCmJs0\"",
-    "mtime": "2026-03-04T07:22:40.959Z",
-    "size": 113717,
-    "path": "index.mjs"
-  },
-  "/index.mjs.map": {
-    "type": "application/json",
-    "etag": "\"6e5e2-msCiGq6UA0nYPK5GijRrg8KMaAE\"",
-    "mtime": "2026-03-04T07:22:40.959Z",
-    "size": 452066,
-    "path": "index.mjs.map"
-  }
-};
+const assets = {};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2173,7 +2158,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _TyYWWE = eventHandler((event) => {
+const _wGSlTt = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2313,9 +2298,9 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
-const getServerEntry = () => import('file://C:/Users/user/Desktop/Practrices/food/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getServerEntry = () => import('file://C:/Users/user/Desktop/Practrices/food-menu/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file://C:/Users/user/Desktop/Practrices/food/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://C:/Users/user/Desktop/Practrices/food-menu/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2596,31 +2581,15 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
-const _lazy_N9YgdP = () => Promise.resolve().then(function () { return login_post$1; });
-const _lazy_oLBswL = () => Promise.resolve().then(function () { return register_post; });
-const _lazy_bcD4_O = () => Promise.resolve().then(function () { return index_delete$1; });
-const _lazy_zY18HD = () => Promise.resolve().then(function () { return index_get$3; });
-const _lazy_t2a3NZ = () => Promise.resolve().then(function () { return index_patch$1; });
-const _lazy_ORjseT = () => Promise.resolve().then(function () { return index_get$1; });
-const _lazy_mu6Vrd = () => Promise.resolve().then(function () { return index_post$1; });
-const _lazy_EMJ9Lj = () => Promise.resolve().then(function () { return menu_get$1; });
-const _lazy_5ysXpp = () => Promise.resolve().then(function () { return orders_post$1; });
-const _lazy_2JtP3e = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_5SAbWv = () => Promise.resolve().then(function () { return _token__get$1; });
+const _lazy_SXN2CQ = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '', handler: _TyYWWE, lazy: false, middleware: true, method: undefined },
-  { route: '/api/admin/auth/login', handler: _lazy_N9YgdP, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/auth/register', handler: _lazy_oLBswL, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/restaurants/:id', handler: _lazy_bcD4_O, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/admin/restaurants/:id', handler: _lazy_zY18HD, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/restaurants/:id', handler: _lazy_t2a3NZ, lazy: true, middleware: false, method: "patch" },
-  { route: '/api/admin/restaurants', handler: _lazy_ORjseT, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/restaurants', handler: _lazy_mu6Vrd, lazy: true, middleware: false, method: "post" },
-  { route: '/api/public/menu', handler: _lazy_EMJ9Lj, lazy: true, middleware: false, method: "get" },
-  { route: '/api/public/orders', handler: _lazy_5ysXpp, lazy: true, middleware: false, method: "post" },
-  { route: '/__nuxt_error', handler: _lazy_2JtP3e, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _wGSlTt, lazy: false, middleware: true, method: undefined },
+  { route: '/api/table/:token', handler: _lazy_5SAbWv, lazy: true, middleware: false, method: "get" },
+  { route: '/__nuxt_error', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_2JtP3e, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -2960,55 +2929,6 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const login_post = defineEventHandler(async (event) => {
-  return "Hello Nitro";
-});
-
-const login_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: login_post
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const register_post = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const index_delete = defineEventHandler(async (event) => {
-  return "Hello Nitro";
-});
-
-const index_delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: index_delete
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const index_get$2 = defineEventHandler(async (event) => {
-  return "Hello Nitro";
-});
-
-const index_get$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: index_get$2
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const index_patch = defineEventHandler(async (event) => {
-  return "Hello Nitro";
-});
-
-const index_patch$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: index_patch
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const index_get = defineEventHandler(() => {
-  return listRestaurants();
-});
-
-const index_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: index_get
-}, Symbol.toStringTag, { value: 'Module' }));
-
 const dataDir = join(process.cwd(), "data");
 if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
 const dbPath = process.env.SQLITE_PATH || join(dataDir, "dev.db");
@@ -3016,144 +2936,50 @@ const db = new Database(dbPath);
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 
-const stmtList = db.prepare(`
-  SELECT id, name, slug, created_at
-  FROM restaurants
-  ORDER BY created_at DESC
-  LIMIT 20
-`);
-const stmtGetById = db.prepare(`
-  SELECT id, name, slug, created_at
-  FROM restaurants
-  WHERE id = ?
-`);
-const stmtGetBySlug = db.prepare(`
-  SELECT id, name, slug, created_at
-  FROM restaurants
-  WHERE slug = ?
-`);
-const stmtInsert = db.prepare(`
-  INSERT INTO restaurants (id, name, slug)
-  VALUES (?, ?, ?)
-`);
-const stmtDelete = db.prepare(`
-  DELETE FROM restaurants WHERE id = ?
-`);
-
-class RestaurantRepository {
-  getList() {
-    return stmtList.all();
-  }
-  getById(id) {
-    return stmtGetById.get(id);
-  }
-  getBySlug(slug) {
-    return stmtGetBySlug.get(slug);
-  }
-  create(input) {
-    stmtInsert.run(input.id, input.name, input.slug);
-    return this.getById(input.id);
-  }
-  delete(id) {
-    stmtDelete.run(id);
-  }
+function findTableByToken(token) {
+  return db.prepare(
+    `
+    SELECT id, restaurant_id, name, token, is_active
+    FROM tables
+    WHERE token = ? AND is_active = 1
+  `
+  ).get(token);
 }
 
-function slugify(input) {
-  return input.trim().toLowerCase().replace(/['"]/g, "").replace(/[^a-z0-9а-яё]+/gi, "-").replace(/^-+|-+$/g, "").replace(/-+/g, "-");
-}
-
-const index_post = defineEventHandler(async (event) => {
-  var _a, _b, _c;
-  const body = await readBody(event);
-  const name = String((_a = body == null ? void 0 : body.name) != null ? _a : "").trim();
-  if (!name) {
-    throw createError({ statusCode: 400, statusMessage: "name is required" });
-  }
-  const repo = new RestaurantRepository();
-  const baseSlug = slugify(String((_b = body == null ? void 0 : body.slug) != null ? _b : name));
-  if (!baseSlug) {
-    throw createError({ statusCode: 400, statusMessage: "invalid slug/name" });
-  }
-  let slug = baseSlug;
-  let i = 2;
-  while (repo.getBySlug(slug)) {
-    slug = `${baseSlug}-${i++}`;
-  }
-  try {
-    const row = repo.create({
-      id: crypto.randomUUID(),
-      name,
-      slug
-    });
-    return row;
-  } catch (e) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: (_c = e == null ? void 0 : e.message) != null ? _c : "Bad Request"
-    });
-  }
-});
-
-const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: index_post
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const menu_get = defineEventHandler((event) => {
-  const q = getQuery$1(event);
-  const tableToken = String(q.tableToken || "").trim();
-  if (!tableToken)
-    throw createError({
-      statusCode: 400,
-      statusMessage: "tableToken required"
-    });
-  const table = db.prepare(
+function findMenuByRestaurantId(restaurantId) {
+  return db.prepare(
     `
-    SELECT t.id, t.name, t.restaurant_id, r.name AS restaurant_name
-    FROM tables t
-    JOIN restaurants r ON r.id = t.restaurant_id
-    WHERE t.token = ? AND t.is_active = 1
-  `
-  ).get(tableToken);
-  if (!table)
-    throw createError({ statusCode: 404, statusMessage: "table not found" });
-  const categories = db.prepare(
-    `
-    SELECT id, name, sort_order
-    FROM menu_categories
-    WHERE restaurant_id = ?
-    ORDER BY sort_order, name
-  `
-  ).all(table.restaurant_id);
-  const items = db.prepare(
-    `
-    SELECT id, category_id, name, description, price_cents, sort_order
+    SELECT id, restaurant_id, category_id, name, description, price_cents, is_active, sort_order
     FROM menu_items
     WHERE restaurant_id = ? AND is_active = 1
-    ORDER BY sort_order, name
+    ORDER BY sort_order ASC, created_at ASC
   `
-  ).all(table.restaurant_id);
+  ).all(restaurantId);
+}
+
+function getTableMenu(token) {
+  const table = findTableByToken(token);
+  if (!table) {
+    throw new Error("Table not found");
+  }
+  const items = findMenuByRestaurantId(table.restaurant_id);
   return {
-    restaurant: { id: table.restaurant_id, name: table.restaurant_name },
-    table: { id: table.id, name: table.name, token: tableToken },
-    categories,
+    table,
     items
   };
+}
+
+const _token__get = defineEventHandler((event) => {
+  const token = getRouterParam(event, "token");
+  if (!token) {
+    throw createError({ statusCode: 400 });
+  }
+  return getTableMenu(token);
 });
 
-const menu_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const _token__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: menu_get
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const orders_post = defineEventHandler(async (event) => {
-  return "Hello Nitro";
-});
-
-const orders_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: orders_post
+  default: _token__get
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function renderPayloadResponse(ssrContext) {

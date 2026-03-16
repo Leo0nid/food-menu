@@ -1,21 +1,21 @@
 import { db } from "../db";
+import { mapRestaurantTableRow } from "../mappers/restaurant-table.mapper";
+import type { RestaurantTableRow } from "../mappers/restaurant-table.mapper";
 
-type TableRow = {
-  id: string;
-  restaurant_id: string;
-  name: string;
-  token: string;
-  is_active: number;
-};
-
-export function findTableByToken(token: string): TableRow | undefined {
-  return db
+export function findTableByToken(token: string) {
+  const row = db
     .prepare(
       `
-    SELECT id, restaurant_id, name, token, is_active
-    FROM tables
-    WHERE token = ? AND is_active = 1
-  `,
+      SELECT id, restaurant_id, name, token, is_active
+      FROM tables
+      WHERE token = ? AND is_active = 1
+    `,
     )
-    .get(token) as TableRow | undefined;
+    .get(token) as RestaurantTableRow | undefined;
+
+  if (!row) {
+    return undefined;
+  }
+
+  return mapRestaurantTableRow(row);
 }

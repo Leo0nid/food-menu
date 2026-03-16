@@ -2936,25 +2936,48 @@ const db = new Database(dbPath);
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 
+function mapRestaurantTableRow(row) {
+  return {
+    id: row.id,
+    restaurantId: row.restaurant_id,
+    name: row.name,
+    token: row.token,
+    isActive: row.is_active === 1
+  };
+}
+
 function findTableByToken(token) {
-  return db.prepare(
+  const row = db.prepare(
     `
-    SELECT id, restaurant_id, name, token, is_active
-    FROM tables
-    WHERE token = ? AND is_active = 1
-  `
+      SELECT id, restaurant_id, name, token, is_active
+      FROM tables
+      WHERE token = ? AND is_active = 1
+    `
   ).get(token);
+  if (!row) {
+    return void 0;
+  }
+  return mapRestaurantTableRow(row);
 }
 
 function findMenuByRestaurantId(restaurantId) {
-  return db.prepare(
+  const rows = db.prepare(
     `
-    SELECT id, restaurant_id, category_id, name, description, price_cents, is_active, sort_order
-    FROM menu_items
-    WHERE restaurant_id = ? AND is_active = 1
-    ORDER BY sort_order ASC, created_at ASC
-  `
+      SELECT
+        id,
+        restaurant_id,
+        category_id,
+        name,
+        description,
+        price_cents,
+        is_active,
+        sort_order
+      FROM menu_items
+      WHERE restaurant_id = ? AND is_active = 1
+      ORDER BY sort_order
+    `
   ).all(restaurantId);
+  return rows;
 }
 
 function getTableMenu(token) {

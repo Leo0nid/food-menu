@@ -8,7 +8,7 @@ export function getTableMenu(token: string) {
     throw new Error("Table not found");
   }
 
-  const items = findMenuByRestaurantId(table.restaurant_id);
+  const items = findMenuByRestaurantId(table.restaurantId);
 
   return {
     table,

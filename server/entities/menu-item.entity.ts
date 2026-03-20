@@ -4,7 +4,7 @@ export type MenuItem = {
   categoryId: string;
   name: string;
   description: string | null;
-  priceCents: number;
+  price: number;
   isActive: boolean;
   sortOrder: number;
 };

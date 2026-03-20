@@ -2133,7 +2133,22 @@ const plugins = [
 _Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU
 ];
 
-const assets = {};
+const assets = {
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1a940-VdvPSL4a94VJ58/zHDbqx1vZaUo\"",
+    "mtime": "2026-03-20T07:20:16.741Z",
+    "size": 108864,
+    "path": "index.mjs"
+  },
+  "/index.mjs.map": {
+    "type": "application/json",
+    "etag": "\"6c3a9-Hj3ibExWb5GMiNE8A+fArR48e1Y\"",
+    "mtime": "2026-03-20T07:20:16.741Z",
+    "size": 443305,
+    "path": "index.mjs.map"
+  }
+};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2581,11 +2596,13 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
+const _lazy_mzU6zc = () => Promise.resolve().then(function () { return index_post; });
 const _lazy_5SAbWv = () => Promise.resolve().then(function () { return _token__get$1; });
 const _lazy_SXN2CQ = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '', handler: _wGSlTt, lazy: false, middleware: true, method: undefined },
+  { route: '/api/orders', handler: _lazy_mzU6zc, lazy: true, middleware: false, method: "post" },
   { route: '/api/table/:token', handler: _lazy_5SAbWv, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
@@ -2929,6 +2946,25 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
+const index_post = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null
+}, Symbol.toStringTag, { value: 'Module' }));
+
+class AppError extends Error {
+  constructor(message, statusCode = 400) {
+    super(message);
+    this.statusCode = statusCode;
+    this.name = "AppError";
+  }
+}
+
+class ValidationError extends AppError {
+  constructor(message) {
+    super(message, 400);
+    this.name = "ValidationError";
+  }
+}
+
 const dataDir = join(process.cwd(), "data");
 if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
 const dbPath = process.env.SQLITE_PATH || join(dataDir, "dev.db");
@@ -2985,7 +3021,7 @@ function getTableMenu(token) {
   if (!table) {
     throw new Error("Table not found");
   }
-  const items = findMenuByRestaurantId(table.restaurant_id);
+  const items = findMenuByRestaurantId(table.restaurantId);
   return {
     table,
     items
@@ -2995,7 +3031,7 @@ function getTableMenu(token) {
 const _token__get = defineEventHandler((event) => {
   const token = getRouterParam(event, "token");
   if (!token) {
-    throw createError({ statusCode: 400 });
+    throw new ValidationError("Table not found");
   }
   return getTableMenu(token);
 });

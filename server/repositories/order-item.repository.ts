@@ -5,7 +5,8 @@ type InsertOrderItemParams = {
   orderId: string;
   menuItemId: string;
   nameSnapshot: string;
-  priceCentsSnapshot: number;
+  unitPriceSnapshot: number;
+  totalPrice: number;
   quantity: number;
 };
 
@@ -29,7 +30,7 @@ export function insertOrderItem(params: InsertOrderItemParams) {
       params.orderId,
       params.menuItemId,
       params.nameSnapshot,
-      params.priceCentsSnapshot,
+      params.unitPriceSnapshot,
       params.quantity,
     );
 }

@@ -1,65 +1,58 @@
-import { randomUUID } from "node:crypto";
 import { db } from "../db";
+import { randomUUID } from "node:crypto";
 import { findTableByToken } from "../repositories/restaurant-table.repository";
 import { findMenuByRestaurantId } from "../repositories/menu.repository";
 import { insertOrder } from "../repositories/order.repository";
-import { insertOrderItem } from "../repositories/order-items.repository";
+import { insertOrderItem } from "../repositories/order-item.repository";
+import type { CreateOrderDTO } from "../dtos/create-order.dto";
+import { NotFoundError } from "../errors/not-found.error";
 
-type CreateOrderItemInput = {
-  menuItemId: string;
-  quantity: number;
-};
-
-type CreateOrderInput = {
-  tableToken: string;
-  comment?: string | null;
-  items: CreateOrderItemInput[];
-};
-
-export function createOrder(input: CreateOrderInput) {
+export function createOrder(input: CreateOrderDTO) {
   const { tableToken, comment, items } = input;
-
-  if (!items.length) {
-    throw new Error("Order items are required");
-  }
 
   const table = findTableByToken(tableToken);
 
   if (!table) {
-    throw new Error("Table not found");
+    throw new NotFoundError("Table not found");
   }
 
   const menuItems = findMenuByRestaurantId(table.restaurantId);
-  const menuMap = new Map(menuItems.map((menuItem) => [menuItem.id, menuItem]));
+  const menuMap = new Map(menuItems.map((m) => [m.id, m]));
 
   const orderId = randomUUID();
 
   const createOrderTx = db.transaction(() => {
-    insertOrder({
-      id: orderId,
-      restaurantId: table.restaurantId,
-      tableId: table.id,
-      comment: comment ?? null,
-    });
+    let orderTotalPrice = 0;
 
     for (const item of items) {
       const menuItem = menuMap.get(item.menuItemId);
 
       if (!menuItem) {
-        throw new Error(`Menu item not found: ${item.menuItemId}`);
+        throw new NotFoundError(`Menu item not found: ${item.menuItemId}`);
       }
 
-      if (item.quantity < 1) {
-        throw new Error(`Invalid quantity: ${item.quantity}`);
-      }
+      orderTotalPrice += menuItem.price * item.quantity;
+    }
+
+    insertOrder({
+      id: orderId,
+      restaurantId: table.restaurantId,
+      tableId: table.id,
+      comment: comment ?? null,
+      totalPrice: orderTotalPrice,
+    });
+
+    for (const item of items) {
+      const menuItem = menuMap.get(item.menuItemId)!;
 
       insertOrderItem({
         id: randomUUID(),
         orderId,
         menuItemId: menuItem.id,
         nameSnapshot: menuItem.name,
-        priceCentsSnapshot: menuItem.priceCents,
+        unitPriceSnapshot: menuItem.price,
         quantity: item.quantity,
+        totalPrice: menuItem.price * item.quantity,
       });
     }
   });

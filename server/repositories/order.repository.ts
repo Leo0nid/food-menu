@@ -4,6 +4,7 @@ type InsertOrderParams = {
   id: string;
   restaurantId: string;
   tableId: string;
+  totalPrice: number;
   comment: string | null;
 };
 

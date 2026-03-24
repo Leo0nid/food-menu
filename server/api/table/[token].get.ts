@@ -1,6 +1,6 @@
 import { defineEventHandler, getRouterParam } from "h3";
-import { ValidationError } from "~~/server/errors/validation.error";
-import { getTableMenu } from "../../core/get-table-menu";
+import { ValidationError } from "~~/server/core/errors/ValidationError";
+import { getTableMenu } from "../../core/usecase/table/GetTableMenuUseCase";
 
 export default defineEventHandler((event) => {
   const token = getRouterParam(event, "token");

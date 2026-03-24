@@ -1,5 +1,5 @@
-import { findTableByToken } from "../repositories/restaurant-table.repository";
-import { findMenuByRestaurantId } from "../repositories/menu.repository";
+import { findTableByToken } from "../../../repositories/RestaurantTableRepository";
+import { findMenuByRestaurantId } from "../../../repositories/MenuRepository";
 
 export function getTableMenu(token: string) {
   const table = findTableByToken(token);

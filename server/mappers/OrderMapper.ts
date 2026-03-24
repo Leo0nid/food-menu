@@ -1,4 +1,4 @@
-import type { Order } from "../entities/order.entity";
+import type { Order } from "../entities/OrderEntity";
 
 type OrderRow = {
   id: string;

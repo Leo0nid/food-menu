@@ -1,6 +1,6 @@
 import { db } from "../db";
-import { mapRestaurantTableRow } from "../mappers/restaurant-table.mapper";
-import type { RestaurantTableRow } from "../mappers/restaurant-table.mapper";
+import { mapRestaurantTableRow } from "../mappers/RestaurantTableMapper";
+import type { RestaurantTableRow } from "../mappers/RestaurantTableMapper";
 
 export function findTableByToken(token: string) {
   const row = db

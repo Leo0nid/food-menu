@@ -1,10 +1,11 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
-import nodeCrypto from 'node:crypto';
+import nodeCrypto, { randomUUID } from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
 import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/@vue/shared/dist/shared.cjs.js';
+import { z, ZodError } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/zod/index.js';
 import Database from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/better-sqlite3/lib/index.js';
 import { promises, existsSync, mkdirSync } from 'node:fs';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue-bundle-renderer/dist/runtime.mjs';
@@ -2136,16 +2137,16 @@ _Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1a940-VdvPSL4a94VJ58/zHDbqx1vZaUo\"",
-    "mtime": "2026-03-20T07:20:16.741Z",
-    "size": 108864,
+    "etag": "\"1b4c8-dl/XCmhsnBnufvc9VusGeTIstfk\"",
+    "mtime": "2026-03-24T05:47:39.753Z",
+    "size": 111816,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"6c3a9-Hj3ibExWb5GMiNE8A+fArR48e1Y\"",
-    "mtime": "2026-03-20T07:20:16.741Z",
-    "size": 443305,
+    "etag": "\"6f4a1-XOj5dhNpWka1aCo52rftrvpUZU4\"",
+    "mtime": "2026-03-24T05:47:39.753Z",
+    "size": 455841,
     "path": "index.mjs.map"
   }
 };
@@ -2596,7 +2597,7 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
-const _lazy_mzU6zc = () => Promise.resolve().then(function () { return index_post; });
+const _lazy_mzU6zc = () => Promise.resolve().then(function () { return index_post$1; });
 const _lazy_5SAbWv = () => Promise.resolve().then(function () { return _token__get$1; });
 const _lazy_SXN2CQ = () => Promise.resolve().then(function () { return renderer$1; });
 
@@ -2946,25 +2947,6 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const index_post = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null
-}, Symbol.toStringTag, { value: 'Module' }));
-
-class AppError extends Error {
-  constructor(message, statusCode = 400) {
-    super(message);
-    this.statusCode = statusCode;
-    this.name = "AppError";
-  }
-}
-
-class ValidationError extends AppError {
-  constructor(message) {
-    super(message, 400);
-    this.name = "ValidationError";
-  }
-}
-
 const dataDir = join(process.cwd(), "data");
 if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
 const dbPath = process.env.SQLITE_PATH || join(dataDir, "dev.db");
@@ -3014,6 +2996,135 @@ function findMenuByRestaurantId(restaurantId) {
     `
   ).all(restaurantId);
   return rows;
+}
+
+function insertOrder(params) {
+  return db.prepare(
+    `
+      INSERT INTO orders (
+        id,
+        restaurant_id,
+        table_id,
+        status,
+        comment,
+        created_at,
+        updated_at
+      )
+      VALUES (?, ?, ?, 'new', ?, datetime('now'), datetime('now'))
+    `
+  ).run(params.id, params.restaurantId, params.tableId, params.comment);
+}
+
+function insertOrderItem(params) {
+  return db.prepare(
+    `
+      INSERT INTO order_items (
+        id,
+        order_id,
+        menu_item_id,
+        name_snapshot,
+        price_cents_snapshot,
+        quantity
+      )
+      VALUES (?, ?, ?, ?, ?, ?)
+    `
+  ).run(
+    params.id,
+    params.orderId,
+    params.menuItemId,
+    params.nameSnapshot,
+    params.unitPriceSnapshot,
+    params.quantity
+  );
+}
+
+class NotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+function createOrder(input) {
+  const { tableToken, comment, items } = input;
+  const table = findTableByToken(tableToken);
+  if (!table) {
+    throw new NotFoundError("Table not found");
+  }
+  const menuItems = findMenuByRestaurantId(table.restaurantId);
+  const menuMap = new Map(menuItems.map((m) => [m.id, m]));
+  const orderId = randomUUID();
+  const createOrderTx = db.transaction(() => {
+    let orderTotalPrice = 0;
+    for (const item of items) {
+      const menuItem = menuMap.get(item.menuItemId);
+      if (!menuItem) {
+        throw new NotFoundError(`Menu item not found: ${item.menuItemId}`);
+      }
+      orderTotalPrice += menuItem.price * item.quantity;
+    }
+    insertOrder({
+      id: orderId,
+      restaurantId: table.restaurantId,
+      tableId: table.id,
+      comment: comment != null ? comment : null});
+    for (const item of items) {
+      const menuItem = menuMap.get(item.menuItemId);
+      insertOrderItem({
+        id: randomUUID(),
+        orderId,
+        menuItemId: menuItem.id,
+        nameSnapshot: menuItem.name,
+        unitPriceSnapshot: menuItem.price,
+        quantity: item.quantity,
+        totalPrice: menuItem.price * item.quantity
+      });
+    }
+  });
+  createOrderTx();
+  return { orderId };
+}
+
+const orderItemSchema = z.object({
+  menuItemId: z.string(),
+  quantity: z.number().int().min(1)
+});
+const createOrderSchema = z.object({
+  tableToken: z.string(),
+  comment: z.string().nullable().optional(),
+  items: z.array(orderItemSchema).min(1)
+});
+
+const index_post = defineEventHandler(async (event) => {
+  try {
+    const body = await readBody(event);
+    const input = createOrderSchema.parse(body);
+    return createOrder(input);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Invalid request",
+        data: error.flatten()
+      });
+    }
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Internal server error"
+    });
+  }
+});
+
+const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: index_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
 }
 
 function getTableMenu(token) {

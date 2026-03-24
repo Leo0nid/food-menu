@@ -1,11 +1,11 @@
-import { db } from "../db";
+import { db } from "../../../db";
 import { randomUUID } from "node:crypto";
-import { findTableByToken } from "../repositories/restaurant-table.repository";
-import { findMenuByRestaurantId } from "../repositories/menu.repository";
-import { insertOrder } from "../repositories/order.repository";
-import { insertOrderItem } from "../repositories/order-item.repository";
-import type { CreateOrderDTO } from "../dtos/create-order.dto";
-import { NotFoundError } from "../errors/not-found.error";
+import { findTableByToken } from "../../../repositories/RestaurantTableRepository";
+import { findMenuByRestaurantId } from "../../../repositories/MenuRepository";
+import { insertOrder } from "../../../repositories/OrderRepository";
+import { insertOrderItem } from "../../../repositories/OrderItemRepository";
+import type { CreateOrderDTO } from "./dto/CreateOrderDto";
+import { NotFoundError } from "../../errors/NotFoundError";
 
 export function createOrder(input: CreateOrderDTO) {
   const { tableToken, comment, items } = input;

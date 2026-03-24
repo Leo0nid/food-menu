@@ -1,4 +1,4 @@
-import type { RestaurantTable } from "../entities/restaurant-table.entity";
+import type { RestaurantTable } from "../entities/RestaurantTableEntity";
 
 type RestaurantTableRow = {
   id: string;

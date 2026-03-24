@@ -1,5 +1,5 @@
 import { db } from "../db";
-import type { MenuItem } from "../entities/menu-item.entity";
+import type { MenuItem } from "../entities/MenuItemEntity";
 
 export function findMenuByRestaurantId(restaurantId: string): MenuItem[] {
   const rows = db

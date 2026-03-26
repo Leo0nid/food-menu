@@ -1,4 +1,6 @@
 import { db } from "../db";
+import { mapOrderRow } from "../mappers/OrderMapper";
+import type { OrderRow } from "../mappers/OrderMapper";
 
 type InsertOrderParams = {
   id: string;
@@ -25,4 +27,27 @@ export function insertOrder(params: InsertOrderParams) {
     `,
     )
     .run(params.id, params.restaurantId, params.tableId, params.comment);
+}
+
+export function findOrderById(id: string) {
+  const row = db
+    .prepare(
+      `
+      SELECT
+        id,
+        restaurant_id,
+        table_id,
+        status,
+        comment,
+        created_at,
+        updated_at
+      FROM orders
+      WHERE id = ?
+    `,
+    )
+    .get(id) as OrderRow | undefined;
+
+  if (!row) return undefined;
+
+  return mapOrderRow(row);
 }

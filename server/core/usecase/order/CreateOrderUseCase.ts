@@ -52,7 +52,6 @@ export function createOrder(input: CreateOrderDTO) {
         nameSnapshot: menuItem.name,
         unitPriceSnapshot: menuItem.price,
         quantity: item.quantity,
-        totalPrice: menuItem.price * item.quantity,
       });
     }
   });

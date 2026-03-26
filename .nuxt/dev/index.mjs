@@ -2137,16 +2137,16 @@ _Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1b4c8-dl/XCmhsnBnufvc9VusGeTIstfk\"",
-    "mtime": "2026-03-24T05:47:39.753Z",
-    "size": 111816,
+    "etag": "\"1bd5e-w9JW+Ioaube1LCz/XxfLjvBsrxg\"",
+    "mtime": "2026-03-26T06:28:03.856Z",
+    "size": 114014,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"6f4a1-XOj5dhNpWka1aCo52rftrvpUZU4\"",
-    "mtime": "2026-03-24T05:47:39.753Z",
-    "size": 455841,
+    "etag": "\"713f4-s0HG5CYeFhBgfssV0brPFapjzt0\"",
+    "mtime": "2026-03-26T06:28:03.857Z",
+    "size": 463860,
     "path": "index.mjs.map"
   }
 };
@@ -2597,12 +2597,14 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
+const _lazy_aHFgpF = () => Promise.resolve().then(function () { return _id__get$1; });
 const _lazy_mzU6zc = () => Promise.resolve().then(function () { return index_post$1; });
 const _lazy_5SAbWv = () => Promise.resolve().then(function () { return _token__get$1; });
 const _lazy_SXN2CQ = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '', handler: _wGSlTt, lazy: false, middleware: true, method: undefined },
+  { route: '/api/orders/:id', handler: _lazy_aHFgpF, lazy: true, middleware: false, method: "get" },
   { route: '/api/orders', handler: _lazy_mzU6zc, lazy: true, middleware: false, method: "post" },
   { route: '/api/table/:token', handler: _lazy_5SAbWv, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined },
@@ -2954,6 +2956,148 @@ const db = new Database(dbPath);
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 
+function mapOrderRow(row) {
+  return {
+    id: row.id,
+    restaurantId: row.restaurant_id,
+    tableId: row.table_id,
+    status: row.status,
+    comment: row.comment,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+function insertOrder(params) {
+  return db.prepare(
+    `
+      INSERT INTO orders (
+        id,
+        restaurant_id,
+        table_id,
+        status,
+        comment,
+        created_at,
+        updated_at
+      )
+      VALUES (?, ?, ?, 'new', ?, datetime('now'), datetime('now'))
+    `
+  ).run(params.id, params.restaurantId, params.tableId, params.comment);
+}
+function findOrderById(id) {
+  const row = db.prepare(
+    `
+      SELECT
+        id,
+        restaurant_id,
+        table_id,
+        status,
+        comment,
+        created_at,
+        updated_at
+      FROM orders
+      WHERE id = ?
+    `
+  ).get(id);
+  if (!row) return void 0;
+  return mapOrderRow(row);
+}
+
+function mapOrderItemRow(row) {
+  return {
+    id: row.id,
+    orderId: row.order_id,
+    menuItemId: row.menu_item_id,
+    nameSnapshot: row.name_snapshot,
+    unitPriceSnapshot: row.price_cents_snapshot,
+    quantity: row.qty
+  };
+}
+
+function insertOrderItem(params) {
+  return db.prepare(
+    `
+      INSERT INTO order_items (
+        id,
+        order_id,
+        menu_item_id,
+        name_snapshot,
+        price_cents_snapshot,
+        qty
+      )
+      VALUES (?, ?, ?, ?, ?, ?)
+    `
+  ).run(
+    params.id,
+    params.orderId,
+    params.menuItemId,
+    params.nameSnapshot,
+    params.unitPriceSnapshot,
+    params.quantity
+  );
+}
+function findOrderItemsByOrderId(orderId) {
+  const rows = db.prepare(
+    `
+      SELECT
+        id,
+        order_id,
+        menu_item_id,
+        name_snapshot,
+        price_cents_snapshot,
+        qty
+      FROM order_items
+      WHERE order_id = ?
+    `
+  ).all(orderId);
+  return rows.map(mapOrderItemRow);
+}
+
+class NotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+function getOrder(orderId) {
+  const order = findOrderById(orderId);
+  if (!order) {
+    throw new NotFoundError("Order not found");
+  }
+  const items = findOrderItemsByOrderId(orderId);
+  return { order, items };
+}
+
+const _id__get = defineEventHandler((event) => {
+  try {
+    const id = getRouterParam(event, "id");
+    if (!id) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Invalid request"
+      });
+    }
+    return getOrder(id);
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: error.message
+      });
+    }
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Internal server error"
+    });
+  }
+});
+
+const _id__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _id__get
+}, Symbol.toStringTag, { value: 'Module' }));
+
 function mapRestaurantTableRow(row) {
   return {
     id: row.id,
@@ -2983,66 +3127,19 @@ function findMenuByRestaurantId(restaurantId) {
     `
       SELECT
         id,
-        restaurant_id,
-        category_id,
+        restaurant_id as restaurantId,
+        category_id as categoryId,
         name,
         description,
-        price_cents,
-        is_active,
-        sort_order
+        price_cents as price,
+        is_active as isActive,
+        sort_order as sortOrder
       FROM menu_items
       WHERE restaurant_id = ? AND is_active = 1
       ORDER BY sort_order
     `
   ).all(restaurantId);
   return rows;
-}
-
-function insertOrder(params) {
-  return db.prepare(
-    `
-      INSERT INTO orders (
-        id,
-        restaurant_id,
-        table_id,
-        status,
-        comment,
-        created_at,
-        updated_at
-      )
-      VALUES (?, ?, ?, 'new', ?, datetime('now'), datetime('now'))
-    `
-  ).run(params.id, params.restaurantId, params.tableId, params.comment);
-}
-
-function insertOrderItem(params) {
-  return db.prepare(
-    `
-      INSERT INTO order_items (
-        id,
-        order_id,
-        menu_item_id,
-        name_snapshot,
-        price_cents_snapshot,
-        quantity
-      )
-      VALUES (?, ?, ?, ?, ?, ?)
-    `
-  ).run(
-    params.id,
-    params.orderId,
-    params.menuItemId,
-    params.nameSnapshot,
-    params.unitPriceSnapshot,
-    params.quantity
-  );
-}
-
-class NotFoundError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "ValidationError";
-  }
 }
 
 function createOrder(input) {
@@ -3076,8 +3173,7 @@ function createOrder(input) {
         menuItemId: menuItem.id,
         nameSnapshot: menuItem.name,
         unitPriceSnapshot: menuItem.price,
-        quantity: item.quantity,
-        totalPrice: menuItem.price * item.quantity
+        quantity: item.quantity
       });
     }
   });
@@ -3101,11 +3197,18 @@ const index_post = defineEventHandler(async (event) => {
     const input = createOrderSchema.parse(body);
     return createOrder(input);
   } catch (error) {
+    console.error("Create order error:", error);
     if (error instanceof ZodError) {
       throw createError({
         statusCode: 400,
         statusMessage: "Invalid request",
         data: error.flatten()
+      });
+    }
+    if (error instanceof NotFoundError) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: error.message
       });
     }
     throw createError({

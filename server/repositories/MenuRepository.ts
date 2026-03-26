@@ -7,13 +7,13 @@ export function findMenuByRestaurantId(restaurantId: string): MenuItem[] {
       `
       SELECT
         id,
-        restaurant_id,
-        category_id,
+        restaurant_id as restaurantId,
+        category_id as categoryId,
         name,
         description,
-        price_cents,
-        is_active,
-        sort_order
+        price_cents as price,
+        is_active as isActive,
+        sort_order as sortOrder
       FROM menu_items
       WHERE restaurant_id = ? AND is_active = 1
       ORDER BY sort_order

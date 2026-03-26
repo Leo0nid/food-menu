@@ -1,4 +1,7 @@
 import { db } from "../db";
+import type { OrderItem } from "../entities/OrderItemEntity";
+import { mapOrderItemRow } from "../mappers/OrderItemMapper";
+import type { OrderItemRow } from "../mappers/OrderItemMapper";
 
 type InsertOrderItemParams = {
   id: string;
@@ -6,7 +9,6 @@ type InsertOrderItemParams = {
   menuItemId: string;
   nameSnapshot: string;
   unitPriceSnapshot: number;
-  totalPrice: number;
   quantity: number;
 };
 
@@ -20,7 +22,7 @@ export function insertOrderItem(params: InsertOrderItemParams) {
         menu_item_id,
         name_snapshot,
         price_cents_snapshot,
-        quantity
+        qty
       )
       VALUES (?, ?, ?, ?, ?, ?)
     `,
@@ -33,4 +35,24 @@ export function insertOrderItem(params: InsertOrderItemParams) {
       params.unitPriceSnapshot,
       params.quantity,
     );
+}
+
+export function findOrderItemsByOrderId(orderId: string): OrderItem[] {
+  const rows = db
+    .prepare(
+      `
+      SELECT
+        id,
+        order_id,
+        menu_item_id,
+        name_snapshot,
+        price_cents_snapshot,
+        qty
+      FROM order_items
+      WHERE order_id = ?
+    `,
+    )
+    .all(orderId) as OrderItemRow[];
+
+  return rows.map(mapOrderItemRow);
 }

@@ -51,3 +51,25 @@ export function findOrderById(id: string) {
 
   return mapOrderRow(row);
 }
+
+export function findOrdersByRestaurantId(restaurantId: string) {
+  const rows = db
+    .prepare(
+      `
+      SELECT
+        id,
+        restaurant_id,
+        table_id,
+        status,
+        comment,
+        created_at,
+        updated_at
+      FROM orders
+      WHERE restaurant_id = ?
+      ORDER BY created_at DESC
+    `,
+    )
+    .all(restaurantId) as OrderRow[];
+
+  return rows.map(mapOrderRow);
+}

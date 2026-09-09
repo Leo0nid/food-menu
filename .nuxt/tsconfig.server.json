@@ -98,8 +98,53 @@
       "#internal/nuxt/paths": [
         "../node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
       ],
+      "~repositories": [
+        "../server/repositories"
+      ],
+      "~repositories/*": [
+        "../server/repositories/*"
+      ],
+      "@usecases": [
+        "../server/core/usecase"
+      ],
+      "@usecases/*": [
+        "../server/core/usecase/*"
+      ],
+      "@api": [
+        "../server/api"
+      ],
+      "@api/*": [
+        "../server/api/*"
+      ],
+      "@database": [
+        "../server/db"
+      ],
+      "@database/*": [
+        "../server/db/*"
+      ],
+      "@entities": [
+        "../server/entities"
+      ],
+      "@entities/*": [
+        "../server/entities/*"
+      ],
+      "@mappers": [
+        "../server/mappers"
+      ],
+      "@mappers/*": [
+        "../server/mappers/*"
+      ],
+      "@errors": [
+        "../server/core/errors"
+      ],
+      "@errors/*": [
+        "../server/core/errors/*"
+      ],
       "#unhead/composables": [
         "../node_modules/nuxt/dist/head/runtime/composables"
+      ],
+      "#nuxt-icon-server-bundle": [
+        "./nuxt-icon-server-bundle"
       ]
     },
     "lib": [
@@ -122,7 +167,8 @@
     "../node_modules",
     "../node_modules/nuxt/node_modules",
     "../node_modules/@nuxtjs/tailwindcss/node_modules",
-    "../node_modules/@nuxt/devtools/node_modules",
+    "../node_modules/@nuxt/icon/node_modules",
+    "../node_modules/@pinia/nuxt/node_modules",
     "../node_modules/@nuxt/telemetry/node_modules",
     "../dist"
   ]

@@ -1,23 +1,23 @@
-import type { RestaurantTable } from "../entities/RestaurantTableEntity";
+import type { MenuItem } from "@entities/MenuItemEntity";
 
-type RestaurantTableRow = {
+export type MenuItemDbRow = {
   id: string;
   restaurant_id: string;
   name: string;
-  token: string;
+  description: string | null;
+  price_kopecks: number;
   is_active: number;
+  sort_order: number;
 };
 
-export function mapRestaurantTableMenuRow(
-  row: RestaurantTableRow,
-): RestaurantTable {
+export function mapMenuItemDbRow(row: MenuItemDbRow): MenuItem {
   return {
     id: row.id,
     restaurantId: row.restaurant_id,
     name: row.name,
-    token: row.token,
+    description: row.description,
+    priceKopecks: row.price_kopecks,
     isActive: row.is_active === 1,
+    sortOrder: row.sort_order,
   };
 }
-
-export type { RestaurantTableRow };

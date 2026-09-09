@@ -1,15 +1,15 @@
 import { defineEventHandler, readBody, createError } from "h3";
 import { ZodError } from "zod";
-import { createOrder } from "../../core/usecase/order/CreateOrderUseCase";
-import { NotFoundError } from "../../core/errors/NotFoundError";
-import { createOrderSchema } from "../../core/usecase/order/dto/CreateOrderDto";
+import { createOrder } from "@usecases/order/CreateOrderUseCase";
+import { NotFoundError } from "@errors/NotFoundError";
+import { createOrderSchema } from "@usecases/order/dto/CreateOrderDto";
 
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const input = createOrderSchema.parse(body);
 
-    return createOrder(input);
+    return await createOrder(input);
   } catch (error) {
     console.error("Create order error:", error);
     if (error instanceof ZodError) {

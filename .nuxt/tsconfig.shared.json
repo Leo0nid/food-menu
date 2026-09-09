@@ -85,6 +85,48 @@
       "#server/*": [
         "../server/*"
       ],
+      "~repositories": [
+        "../server/repositories"
+      ],
+      "~repositories/*": [
+        "../server/repositories/*"
+      ],
+      "@usecases": [
+        "../server/core/usecase"
+      ],
+      "@usecases/*": [
+        "../server/core/usecase/*"
+      ],
+      "@api": [
+        "../server/api"
+      ],
+      "@api/*": [
+        "../server/api/*"
+      ],
+      "@database": [
+        "../server/db"
+      ],
+      "@database/*": [
+        "../server/db/*"
+      ],
+      "@entities": [
+        "../server/entities"
+      ],
+      "@entities/*": [
+        "../server/entities/*"
+      ],
+      "@mappers": [
+        "../server/mappers"
+      ],
+      "@mappers/*": [
+        "../server/mappers/*"
+      ],
+      "@errors": [
+        "../server/core/errors"
+      ],
+      "@errors/*": [
+        "../server/core/errors/*"
+      ],
       "#app": [
         "../node_modules/nuxt/dist/app"
       ],
@@ -104,7 +146,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev"
+        "./manifest/meta/dev.json"
       ],
       "#build": [
         "."

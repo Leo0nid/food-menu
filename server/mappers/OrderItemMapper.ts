@@ -1,23 +1,21 @@
-import type { OrderItem } from "../entities/OrderItemEntity";
+import type { OrderItem } from "@entities/OrderItemEntity";
 
-type OrderItemRow = {
+export type OrderItemDbRow = {
   id: string;
   order_id: string;
   menu_item_id: string;
   name_snapshot: string;
-  price_cents_snapshot: number;
+  price_kopecks_snapshot: number;
   qty: number;
 };
 
-export function mapOrderItemRow(row: OrderItemRow): OrderItem {
+export function mapOrderItemRow(row: OrderItemDbRow): OrderItem {
   return {
     id: row.id,
     orderId: row.order_id,
     menuItemId: row.menu_item_id,
     nameSnapshot: row.name_snapshot,
-    unitPriceSnapshot: row.price_cents_snapshot,
+    priceKopecksSnapshot: row.price_kopecks_snapshot,
     quantity: row.qty,
   };
 }
-
-export type { OrderItemRow };

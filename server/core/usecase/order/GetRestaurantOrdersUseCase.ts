@@ -1,15 +1,15 @@
-import { findOrdersByRestaurantId } from "../../../repositories/OrderRepository";
-import { findOrderItemsByOrderIds } from "../../../repositories/OrderItemRepository";
-import { ValidationError } from "../../errors/ValidationError";
+import { findOrdersByRestaurantId } from "~repositories/OrderRepository";
+import { getOrderItemsByOrderIds } from "~repositories/OrderItemRepository";
+import { ValidationError } from "@errors/ValidationError";
 
-export function getRestaurantOrders(restaurantId: string) {
+export async function getRestaurantOrders(restaurantId: string) {
   const id = restaurantId.trim();
   if (!id) {
     throw new ValidationError("restaurantId required");
   }
 
-  const orders = findOrdersByRestaurantId(id);
-  const items = findOrderItemsByOrderIds(orders.map((o) => o.id));
+  const orders = await findOrdersByRestaurantId(id);
+  const items = await getOrderItemsByOrderIds(orders.map((o) => o.id));
 
   const itemsByOrderId = new Map<string, typeof items>();
   for (const item of items) {

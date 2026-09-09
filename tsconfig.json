@@ -14,5 +14,19 @@
     {
       "path": "./.nuxt/tsconfig.node.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "#server/*": ["./server/*"],
+      "~repositories/*": ["./server/repositories/*"],
+      "@usecases/*": ["./server/core/usecase/*"],
+      "@api/*": ["./server/api/*"],
+      "@database/*": ["./server/db/*"],
+      "@entities/*": ["./server/entities/*"],
+      "@mappers/*": ["./server/mappers/*"],
+      "@errors/*": ["./server/core/errors/*"]
+    }
+  }
 }

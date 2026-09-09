@@ -1,6 +1,6 @@
-import type { RestaurantTable } from "../entities/RestaurantTableEntity";
+import type { RestaurantTable } from "@entities/RestaurantTableEntity";
 
-type RestaurantTableRow = {
+type RestaurantTableDbRow = {
   id: string;
   restaurant_id: string;
   name: string;
@@ -8,8 +8,8 @@ type RestaurantTableRow = {
   is_active: number;
 };
 
-export function mapRestaurantTableRow(
-  row: RestaurantTableRow,
+export function mapRestaurantTableDbRow(
+  row: RestaurantTableDbRow,
 ): RestaurantTable {
   return {
     id: row.id,
@@ -20,4 +20,4 @@ export function mapRestaurantTableRow(
   };
 }
 
-export type { RestaurantTableRow };
+export type { RestaurantTableDbRow };

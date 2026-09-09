@@ -1,5 +1,5 @@
 import { initDb } from "./schema";
 
-initDb();
-
-console.log("initDb executed");
+void initDb().catch((error) => {
+  console.error("Database initialization failed:", error);
+});

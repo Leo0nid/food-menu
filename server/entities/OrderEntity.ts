@@ -3,6 +3,7 @@ export type Order = {
   restaurantId: string;
   tableId: string;
   status: "new" | "cooking" | "ready" | "done";
+  totalKopecks: number;
   comment: string | null;
   createdAt: string;
   updatedAt: string;

@@ -3,41 +3,43 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto, { randomUUID } from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/@vue/shared/dist/shared.cjs.js';
-import { z, ZodError } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/zod/index.js';
-import Database from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/better-sqlite3/lib/index.js';
-import { promises, existsSync, mkdirSync } from 'node:fs';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/destr/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/devalue/index.js';
-import { isVNode, isRef, toValue } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/vue/index.mjs';
-import { createHooks } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/@vue/shared/dist/shared.cjs.js';
+import { z, ZodError } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/zod/index.js';
+import { createPool } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/mysql2/promise.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, parseQuery, parsePath } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/devalue/index.js';
+import { isVNode, isRef, toValue } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/vue/index.mjs';
+import { createHooks } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/unstorage/drivers/fs.mjs';
+import { digest, hash as hash$1 } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/errx/dist/index.js';
+import { getContext } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/errx/dist/index.mjs';
+import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://C:/Users/user/Desktop/Practrices/food-menu/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/unhead/dist/utils.mjs';
+import { getIcons } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/node_modules/@iconify/utils/lib/index.js';
+import { collections } from 'file://C:/Users/Leonid/Desktop/Projects/food-menu/.nuxt/nuxt-icon-server-bundle.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/user/Desktop/Practrices/food-menu/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Users/Leonid/Desktop/Projects/food-menu/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -49,11 +51,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food-menu","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/user/Desktop/Practrices/food-menu/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food-menu/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/user/Desktop/Practrices/food-menu/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/user/Desktop/Practrices/food-menu/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Leonid/Desktop/Projects/food-menu","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Leonid/Desktop/Projects/food-menu/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Leonid/Desktop/Projects/food-menu/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Leonid/Desktop/Projects/food-menu/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/Leonid/Desktop/Projects/food-menu/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -578,7 +580,248 @@ function cloneWithProxy(obj, overrides) {
 const cachedEventHandler = defineCachedEventHandler;
 
 const inlineAppConfig = {
-  "nuxt": {}
+  "nuxt": {},
+  "icon": {
+    "provider": "server",
+    "class": "",
+    "aliases": {},
+    "iconifyApiEndpoint": "https://api.iconify.design",
+    "localApiEndpoint": "/api/_nuxt_icon",
+    "fallbackToApi": true,
+    "cssSelectorPrefix": "i-",
+    "cssWherePseudo": true,
+    "mode": "css",
+    "attrs": {
+      "aria-hidden": true
+    },
+    "collections": [
+      "academicons",
+      "akar-icons",
+      "ant-design",
+      "arcticons",
+      "basil",
+      "bi",
+      "bitcoin-icons",
+      "bpmn",
+      "brandico",
+      "bx",
+      "bxl",
+      "bxs",
+      "bytesize",
+      "carbon",
+      "catppuccin",
+      "cbi",
+      "charm",
+      "ci",
+      "cib",
+      "cif",
+      "cil",
+      "circle-flags",
+      "circum",
+      "clarity",
+      "codex",
+      "codicon",
+      "covid",
+      "cryptocurrency",
+      "cryptocurrency-color",
+      "cuida",
+      "dashicons",
+      "devicon",
+      "devicon-plain",
+      "dinkie-icons",
+      "duo-icons",
+      "ei",
+      "el",
+      "emojione",
+      "emojione-monotone",
+      "emojione-v1",
+      "entypo",
+      "entypo-social",
+      "eos-icons",
+      "ep",
+      "et",
+      "eva",
+      "f7",
+      "fa",
+      "fa-brands",
+      "fa-regular",
+      "fa-solid",
+      "fa6-brands",
+      "fa6-regular",
+      "fa6-solid",
+      "fa7-brands",
+      "fa7-regular",
+      "fa7-solid",
+      "fad",
+      "famicons",
+      "fe",
+      "feather",
+      "file-icons",
+      "flag",
+      "flagpack",
+      "flat-color-icons",
+      "flat-ui",
+      "flowbite",
+      "fluent",
+      "fluent-color",
+      "fluent-emoji",
+      "fluent-emoji-flat",
+      "fluent-emoji-high-contrast",
+      "fluent-mdl2",
+      "fontelico",
+      "fontisto",
+      "formkit",
+      "foundation",
+      "fxemoji",
+      "gala",
+      "game-icons",
+      "garden",
+      "geo",
+      "gg",
+      "gis",
+      "gravity-ui",
+      "gridicons",
+      "grommet-icons",
+      "guidance",
+      "healthicons",
+      "heroicons",
+      "heroicons-outline",
+      "heroicons-solid",
+      "hugeicons",
+      "humbleicons",
+      "ic",
+      "icomoon-free",
+      "icon-park",
+      "icon-park-outline",
+      "icon-park-solid",
+      "icon-park-twotone",
+      "iconamoon",
+      "iconoir",
+      "icons8",
+      "il",
+      "ion",
+      "iwwa",
+      "ix",
+      "jam",
+      "la",
+      "lets-icons",
+      "line-md",
+      "lineicons",
+      "logos",
+      "ls",
+      "lsicon",
+      "lucide",
+      "lucide-lab",
+      "mage",
+      "majesticons",
+      "maki",
+      "map",
+      "marketeq",
+      "material-icon-theme",
+      "material-symbols",
+      "material-symbols-light",
+      "mdi",
+      "mdi-light",
+      "medical-icon",
+      "memory",
+      "meteocons",
+      "meteor-icons",
+      "mi",
+      "mingcute",
+      "mono-icons",
+      "mynaui",
+      "nimbus",
+      "nonicons",
+      "noto",
+      "noto-v1",
+      "nrk",
+      "octicon",
+      "oi",
+      "ooui",
+      "openmoji",
+      "oui",
+      "pajamas",
+      "pepicons",
+      "pepicons-pencil",
+      "pepicons-pop",
+      "pepicons-print",
+      "ph",
+      "picon",
+      "pixel",
+      "pixelarticons",
+      "prime",
+      "proicons",
+      "ps",
+      "qlementine-icons",
+      "quill",
+      "radix-icons",
+      "raphael",
+      "ri",
+      "rivet-icons",
+      "roentgen",
+      "si",
+      "si-glyph",
+      "sidekickicons",
+      "simple-icons",
+      "simple-line-icons",
+      "skill-icons",
+      "solar",
+      "stash",
+      "streamline",
+      "streamline-block",
+      "streamline-color",
+      "streamline-cyber",
+      "streamline-cyber-color",
+      "streamline-emojis",
+      "streamline-flex",
+      "streamline-flex-color",
+      "streamline-freehand",
+      "streamline-freehand-color",
+      "streamline-kameleon-color",
+      "streamline-logos",
+      "streamline-pixel",
+      "streamline-plump",
+      "streamline-plump-color",
+      "streamline-sharp",
+      "streamline-sharp-color",
+      "streamline-stickies-color",
+      "streamline-ultimate",
+      "streamline-ultimate-color",
+      "subway",
+      "svg-spinners",
+      "system-uicons",
+      "tabler",
+      "tdesign",
+      "teenyicons",
+      "temaki",
+      "token",
+      "token-branded",
+      "topcoat",
+      "twemoji",
+      "typcn",
+      "uil",
+      "uim",
+      "uis",
+      "uit",
+      "uiw",
+      "unjs",
+      "vaadin",
+      "vs",
+      "vscode-icons",
+      "websymbol",
+      "weui",
+      "whh",
+      "wi",
+      "wpf",
+      "zmdi",
+      "zondicons",
+      "app-icon"
+    ],
+    "fetchTimeout": 1500,
+    "customCollections": [
+      "app-icon"
+    ]
+  }
 };
 
 
@@ -648,7 +891,10 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {},
+  "icon": {
+    "serverKnownCssClasses": []
+  }
 };
 const envOptions = {
   prefix: "NITRO_",
@@ -2010,26 +2256,9 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const script = `
-if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
-  Object.defineProperty(window, '__NUXT_DEVTOOLS_TIME_METRIC__', {
-    value: {},
-    enumerable: false,
-    configurable: true,
-  })
-}
-window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
-`;
+const rootDir = "C:/Users/Leonid/Desktop/Projects/food-menu";
 
-const _WAxTQJWAzagHFuNzCfJUkH6dseAZZOgxIrt5Qq2d6PY = (function(nitro) {
-  nitro.hooks.hook("render:html", (htmlContext) => {
-    htmlContext.head.push(`<script>${script}<\/script>`);
-  });
-});
-
-const rootDir = "C:/Users/user/Desktop/Practrices/food-menu";
-
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"name":"robots","content":"noindex, nofollow"}],"link":[],"style":[],"script":[],"noscript":[]};
 
 const appRootTag = "div";
 
@@ -2056,7 +2285,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU = (nitroApp) => {
+const _1NathPfGzEmkRxfg5yE4cXH21bWuzRCGlU5Wsc6aJ8 = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2130,26 +2359,10 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _WAxTQJWAzagHFuNzCfJUkH6dseAZZOgxIrt5Qq2d6PY,
-_Z9U9rJ_8Q7OpPXAI87gY1lNsDhK_Acgmn2rrtNRTU
+  _1NathPfGzEmkRxfg5yE4cXH21bWuzRCGlU5Wsc6aJ8
 ];
 
-const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1bd5e-w9JW+Ioaube1LCz/XxfLjvBsrxg\"",
-    "mtime": "2026-03-26T06:28:03.856Z",
-    "size": 114014,
-    "path": "index.mjs"
-  },
-  "/index.mjs.map": {
-    "type": "application/json",
-    "etag": "\"713f4-s0HG5CYeFhBgfssV0brPFapjzt0\"",
-    "mtime": "2026-03-26T06:28:03.857Z",
-    "size": 463860,
-    "path": "index.mjs.map"
-  }
-};
+const assets = {};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2174,7 +2387,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _wGSlTt = eventHandler((event) => {
+const _Pwmb2B = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2314,9 +2527,9 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
-const getServerEntry = () => import('file://C:/Users/user/Desktop/Practrices/food-menu/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getServerEntry = () => import('file://C:/Users/Leonid/Desktop/Projects/food-menu/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file://C:/Users/user/Desktop/Practrices/food-menu/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://C:/Users/Leonid/Desktop/Projects/food-menu/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2597,19 +2810,84 @@ async function getIslandContext(event) {
 	return ctx;
 }
 
-const _lazy_aHFgpF = () => Promise.resolve().then(function () { return _id__get$1; });
-const _lazy_mzU6zc = () => Promise.resolve().then(function () { return index_post$1; });
-const _lazy_5SAbWv = () => Promise.resolve().then(function () { return _token__get$1; });
-const _lazy_SXN2CQ = () => Promise.resolve().then(function () { return renderer$1; });
+const options = {"iconifyApiEndpoint":"https://api.iconify.design"};
+
+const warnOnceSet = /* @__PURE__ */ new Set();
+const DEFAULT_ENDPOINT = "https://api.iconify.design";
+function getInstallCommand(pkg) {
+  const ua = process.env.npm_config_user_agent || "";
+  if (ua.startsWith("pnpm")) return `pnpm add -D ${pkg}`;
+  if (ua.startsWith("yarn")) return `yarn add -D ${pkg}`;
+  if (ua.startsWith("bun")) return `bun add -D ${pkg}`;
+  return `npm i -D ${pkg}`;
+}
+const _NIGopE = defineCachedEventHandler(async (event) => {
+  const collectionName = event.context.params?.collection?.replace(/\.json$/, "");
+  const collection = collectionName && Object.hasOwn(collections, collectionName) ? await collections[collectionName]?.() : null;
+  const apiEndPoint = options.iconifyApiEndpoint;
+  const icons = String(parseQuery(parsePath(event.path).search).icons || "").split(",");
+  if (!collectionName) return createError({ status: 400, message: "No collection specified" });
+  if (!icons.length) return createError({ status: 400, message: "No icons specified" });
+  if (!collection && true && !warnOnceSet.has(collectionName) && apiEndPoint === DEFAULT_ENDPOINT) {
+    consola$1.warn([
+      `[Icon] Collection \`${collectionName}\` is not found locally`,
+      `We suggest to install it via \`${getInstallCommand(`@iconify-json/${collectionName}`)}\` to provide the best end-user experience.`
+    ].join("\n"));
+    warnOnceSet.add(collectionName);
+  }
+  if (collection) {
+    const data = getIcons(
+      collection,
+      icons
+    );
+    consola$1.debug(`[Icon] serving ${icons.map((i) => "`" + collectionName + ":" + i + "`").join(",")} from bundled collection`);
+    return data;
+  }
+  {
+    const apiUrl = new URL(`./${collectionName}.json?icons=${icons.join(",")}`, apiEndPoint);
+    consola$1.debug(`[Icon] fetching ${icons.map((i) => "`" + collectionName + ":" + i + "`").join(",")} from iconify api`);
+    if (apiUrl.host !== new URL(apiEndPoint).host) {
+      return createError({ status: 400, message: "Invalid icon request" });
+    }
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        return response.status === 404 ? createError({ status: 404 }) : createError({ status: 500, message: "Failed to fetch fallback icon" });
+      }
+      return response.json();
+    } catch (e) {
+      consola$1.error(e);
+      return createError({ status: 500, message: "Failed to fetch fallback icon" });
+    }
+  }
+  return createError({ status: 404 });
+}, {
+  group: "nuxt",
+  name: "icon",
+  getKey(event) {
+    const collection = event.context.params?.collection?.replace(/\.json$/, "") || "unknown";
+    const icons = String(parseQuery(parsePath(event.path).search).icons || "").split(",");
+    return `${collection}_${icons[0]}_${icons.length}_${hash$1(icons.join(","))}`;
+  },
+  swr: true,
+  maxAge: 60 * 60 * 24 * 7
+  // 1 week
+});
+
+const _lazy_kTbiQX = () => Promise.resolve().then(function () { return _id__get$1; });
+const _lazy_DDHAXu = () => Promise.resolve().then(function () { return index_post$1; });
+const _lazy_CQwxfv = () => Promise.resolve().then(function () { return _token__get$1; });
+const _lazy_CF8C5m = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '', handler: _wGSlTt, lazy: false, middleware: true, method: undefined },
-  { route: '/api/orders/:id', handler: _lazy_aHFgpF, lazy: true, middleware: false, method: "get" },
-  { route: '/api/orders', handler: _lazy_mzU6zc, lazy: true, middleware: false, method: "post" },
-  { route: '/api/table/:token', handler: _lazy_5SAbWv, lazy: true, middleware: false, method: "get" },
-  { route: '/__nuxt_error', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _Pwmb2B, lazy: false, middleware: true, method: undefined },
+  { route: '/api/orders/:id', handler: _lazy_kTbiQX, lazy: true, middleware: false, method: "get" },
+  { route: '/api/orders', handler: _lazy_DDHAXu, lazy: true, middleware: false, method: "post" },
+  { route: '/api/tables/:token', handler: _lazy_CQwxfv, lazy: true, middleware: false, method: "get" },
+  { route: '/__nuxt_error', handler: _lazy_CF8C5m, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_SXN2CQ, lazy: true, middleware: false, method: undefined }
+  { route: '/api/_nuxt_icon/:collection', handler: _NIGopE, lazy: false, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_CF8C5m, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -2949,12 +3227,121 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const dataDir = join(process.cwd(), "data");
-if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
-const dbPath = process.env.SQLITE_PATH || join(dataDir, "dev.db");
-const db = new Database(dbPath);
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+async function initDb() {
+  const connection = await db.getConnection();
+  try {
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS restaurants (
+        id VARCHAR(36) PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        slug VARCHAR(255) NOT NULL UNIQUE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS tables (
+        id VARCHAR(36) PRIMARY KEY,
+        restaurant_id VARCHAR(36) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        token VARCHAR(255) NOT NULL UNIQUE,
+        is_active TINYINT(1) NOT NULL DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_tables_restaurant (restaurant_id),
+        CONSTRAINT fk_tables_restaurant
+          FOREIGN KEY (restaurant_id)
+          REFERENCES restaurants(id)
+          ON DELETE CASCADE
+      )
+    `);
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS menu_items (
+        id VARCHAR(36) PRIMARY KEY,
+        restaurant_id VARCHAR(36) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        description TEXT NULL,
+        price_kopecks INT NOT NULL,
+        is_active TINYINT(1) NOT NULL DEFAULT 1,
+        sort_order INT NOT NULL DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_menu_items_restaurant (restaurant_id),
+        CONSTRAINT fk_menu_items_restaurant
+          FOREIGN KEY (restaurant_id)
+          REFERENCES restaurants(id)
+          ON DELETE CASCADE
+      )
+    `);
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id VARCHAR(36) PRIMARY KEY,
+        restaurant_id VARCHAR(36) NOT NULL,
+        table_id VARCHAR(36) NOT NULL,
+        status VARCHAR(20) NOT NULL DEFAULT 'new',
+        comment TEXT NULL,
+        total_kopecks INT NOT NULL DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_orders_restaurant_created (restaurant_id, created_at),
+        INDEX idx_orders_restaurant_status (restaurant_id, status),
+        CONSTRAINT fk_orders_restaurant
+          FOREIGN KEY (restaurant_id)
+          REFERENCES restaurants(id)
+          ON DELETE CASCADE,
+        CONSTRAINT fk_orders_table
+          FOREIGN KEY (table_id)
+          REFERENCES tables(id)
+          ON DELETE CASCADE
+      )
+    `);
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS order_items (
+        id VARCHAR(36) PRIMARY KEY,
+        order_id VARCHAR(36) NOT NULL,
+        menu_item_id VARCHAR(36) NOT NULL,
+        name_snapshot VARCHAR(255) NOT NULL,
+        price_kopecks_snapshot INT NOT NULL,
+        qty INT NOT NULL,
+        item_comment TEXT NULL,
+        INDEX idx_order_items_order (order_id),
+        CONSTRAINT fk_order_items_order
+          FOREIGN KEY (order_id)
+          REFERENCES orders(id)
+          ON DELETE CASCADE,
+        CONSTRAINT fk_order_items_menu_item
+          FOREIGN KEY (menu_item_id)
+          REFERENCES menu_items(id)
+          ON DELETE CASCADE
+      )
+    `);
+  } finally {
+    connection.release();
+  }
+}
+
+var _a, _b, _c, _d, _e;
+const host = (_a = process.env.MYSQL_HOST) != null ? _a : "127.0.0.1";
+const port = Number((_b = process.env.MYSQL_PORT) != null ? _b : 3306);
+const user = (_c = process.env.MYSQL_USER) != null ? _c : "root";
+const password = (_d = process.env.MYSQL_PASSWORD) != null ? _d : "password";
+const database = (_e = process.env.MYSQL_DATABASE) != null ? _e : "food_menu";
+const db = createPool({
+  host,
+  port,
+  user,
+  password,
+  database,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+void initDb().catch((error) => {
+  console.error("Database initialization failed:", error);
+});
+async function executeQuery(sql, params, connection) {
+  const values = params != null ? params : [];
+  const [rows] = await db.execute(sql, values);
+  return rows;
+}
 
 function mapOrderRow(row) {
   return {
@@ -2964,12 +3351,14 @@ function mapOrderRow(row) {
     status: row.status,
     comment: row.comment,
     createdAt: row.created_at,
-    updatedAt: row.updated_at
+    updatedAt: row.updated_at,
+    totalKopecks: row.total_kopecks
   };
 }
 
-function insertOrder(params) {
-  return db.prepare(
+async function saveOrder(params, connection) {
+  const executor = connection != null ? connection : db;
+  await executor.execute(
     `
       INSERT INTO orders (
         id,
@@ -2977,15 +3366,23 @@ function insertOrder(params) {
         table_id,
         status,
         comment,
+        total_kopecks,
         created_at,
         updated_at
       )
-      VALUES (?, ?, ?, 'new', ?, datetime('now'), datetime('now'))
-    `
-  ).run(params.id, params.restaurantId, params.tableId, params.comment);
+      VALUES (?, ?, ?, 'new', ?, ?, NOW(), NOW())
+    `,
+    [
+      params.id,
+      params.restaurantId,
+      params.tableId,
+      params.comment,
+      params.totalKopecks
+    ]
+  );
 }
-function findOrderById(id) {
-  const row = db.prepare(
+async function findOrderById(id) {
+  const rows = await executeQuery(
     `
       SELECT
         id,
@@ -2993,12 +3390,15 @@ function findOrderById(id) {
         table_id,
         status,
         comment,
+        total_kopecks,
         created_at,
         updated_at
       FROM orders
       WHERE id = ?
-    `
-  ).get(id);
+    `,
+    [id]
+  );
+  const row = rows[0];
   if (!row) return void 0;
   return mapOrderRow(row);
 }
@@ -3009,76 +3409,79 @@ function mapOrderItemRow(row) {
     orderId: row.order_id,
     menuItemId: row.menu_item_id,
     nameSnapshot: row.name_snapshot,
-    unitPriceSnapshot: row.price_cents_snapshot,
+    priceKopecksSnapshot: row.price_kopecks_snapshot,
     quantity: row.qty
   };
 }
 
-function insertOrderItem(params) {
-  return db.prepare(
+async function saveOrderItem(params, connection) {
+  const executor = connection != null ? connection : db;
+  await executor.execute(
     `
       INSERT INTO order_items (
         id,
         order_id,
         menu_item_id,
         name_snapshot,
-        price_cents_snapshot,
+        price_kopecks_snapshot,
         qty
       )
       VALUES (?, ?, ?, ?, ?, ?)
-    `
-  ).run(
-    params.id,
-    params.orderId,
-    params.menuItemId,
-    params.nameSnapshot,
-    params.unitPriceSnapshot,
-    params.quantity
+    `,
+    [
+      params.id,
+      params.orderId,
+      params.menuItemId,
+      params.nameSnapshot,
+      params.priceKopecksSnapshot,
+      params.quantity
+    ]
   );
 }
-function findOrderItemsByOrderId(orderId) {
-  const rows = db.prepare(
+async function getOrderItemsByOrderId(orderId) {
+  const rows = await executeQuery(
     `
       SELECT
         id,
         order_id,
         menu_item_id,
         name_snapshot,
-        price_cents_snapshot,
+        price_kopecks_snapshot,
         qty
       FROM order_items
       WHERE order_id = ?
-    `
-  ).all(orderId);
+    `,
+    [orderId]
+  );
   return rows.map(mapOrderItemRow);
 }
 
 class NotFoundError extends Error {
   constructor(message) {
     super(message);
-    this.name = "ValidationError";
+    this.name = "NotFoundError";
   }
 }
 
-function getOrder(orderId) {
-  const order = findOrderById(orderId);
+async function getOrder(orderId) {
+  const order = await findOrderById(orderId);
   if (!order) {
     throw new NotFoundError("Order not found");
   }
-  const items = findOrderItemsByOrderId(orderId);
+  const items = await getOrderItemsByOrderId(orderId);
   return { order, items };
 }
 
-const _id__get = defineEventHandler((event) => {
+const _id__get = defineEventHandler(async (event) => {
+  const id = getRouterParam(event, "id");
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request"
+    });
+  }
   try {
-    const id = getRouterParam(event, "id");
-    if (!id) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "Invalid request"
-      });
-    }
-    return getOrder(id);
+    return await getOrder(id);
   } catch (error) {
     if (error instanceof NotFoundError) {
       throw createError({
@@ -3098,7 +3501,7 @@ const _id__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty
   default: _id__get
 }, Symbol.toStringTag, { value: 'Module' }));
 
-function mapRestaurantTableRow(row) {
+function mapRestaurantTableDbRow(row) {
   return {
     id: row.id,
     restaurantId: row.restaurant_id,
@@ -3108,77 +3511,121 @@ function mapRestaurantTableRow(row) {
   };
 }
 
-function findTableByToken(token) {
-  const row = db.prepare(
+async function findTableByToken(token) {
+  const rows = await executeQuery(
     `
       SELECT id, restaurant_id, name, token, is_active
       FROM tables
       WHERE token = ? AND is_active = 1
-    `
-  ).get(token);
+    `,
+    [token]
+  );
+  const row = rows[0];
   if (!row) {
     return void 0;
   }
-  return mapRestaurantTableRow(row);
+  return mapRestaurantTableDbRow(row);
 }
 
-function findMenuByRestaurantId(restaurantId) {
-  const rows = db.prepare(
+function mapMenuItemDbRow(row) {
+  return {
+    id: row.id,
+    restaurantId: row.restaurant_id,
+    name: row.name,
+    description: row.description,
+    priceKopecks: row.price_kopecks,
+    isActive: row.is_active === 1,
+    sortOrder: row.sort_order
+  };
+}
+
+async function findMenuByRestaurantId(restaurantId) {
+  const rows = await executeQuery(
     `
       SELECT
         id,
-        restaurant_id as restaurantId,
-        category_id as categoryId,
+        restaurant_id,
         name,
         description,
-        price_cents as price,
-        is_active as isActive,
-        sort_order as sortOrder
+        price_kopecks,
+        is_active,
+        sort_order
       FROM menu_items
       WHERE restaurant_id = ? AND is_active = 1
       ORDER BY sort_order
-    `
-  ).all(restaurantId);
-  return rows;
+    `,
+    [restaurantId]
+  );
+  return rows.map(mapMenuItemDbRow);
 }
 
-function createOrder(input) {
+function buildMenuMap(menuItems) {
+  return new Map(menuItems.map((menuItem) => [menuItem.id, menuItem]));
+}
+function prepareOrderItems(items, menuMap) {
+  const preparedItems = [];
+  let totalKopecks = 0;
+  for (const item of items) {
+    const menuItem = menuMap.get(item.menuItemId);
+    if (!menuItem) {
+      throw new NotFoundError(`Menu item not found: ${item.menuItemId}`);
+    }
+    totalKopecks += menuItem.priceKopecks * item.quantity;
+    preparedItems.push({
+      menuItemId: menuItem.id,
+      nameSnapshot: menuItem.name,
+      priceKopecksSnapshot: menuItem.priceKopecks,
+      quantity: item.quantity
+    });
+  }
+  return { preparedItems, totalKopecks };
+}
+async function saveOrderItems(items, orderId, connection) {
+  for (const item of items) {
+    await saveOrderItem(
+      {
+        id: randomUUID(),
+        orderId,
+        menuItemId: item.menuItemId,
+        nameSnapshot: item.nameSnapshot,
+        priceKopecksSnapshot: item.priceKopecksSnapshot,
+        quantity: item.quantity
+      },
+      connection
+    );
+  }
+}
+async function createOrder(input) {
   const { tableToken, comment, items } = input;
-  const table = findTableByToken(tableToken);
+  const table = await findTableByToken(tableToken);
   if (!table) {
     throw new NotFoundError("Table not found");
   }
-  const menuItems = findMenuByRestaurantId(table.restaurantId);
-  const menuMap = new Map(menuItems.map((m) => [m.id, m]));
+  const menuItems = await findMenuByRestaurantId(table.restaurantId);
+  const menuMap = buildMenuMap(menuItems);
+  const { preparedItems, totalKopecks } = prepareOrderItems(items, menuMap);
   const orderId = randomUUID();
-  const createOrderTx = db.transaction(() => {
-    let orderTotalPrice = 0;
-    for (const item of items) {
-      const menuItem = menuMap.get(item.menuItemId);
-      if (!menuItem) {
-        throw new NotFoundError(`Menu item not found: ${item.menuItemId}`);
-      }
-      orderTotalPrice += menuItem.price * item.quantity;
-    }
-    insertOrder({
-      id: orderId,
-      restaurantId: table.restaurantId,
-      tableId: table.id,
-      comment: comment != null ? comment : null});
-    for (const item of items) {
-      const menuItem = menuMap.get(item.menuItemId);
-      insertOrderItem({
-        id: randomUUID(),
-        orderId,
-        menuItemId: menuItem.id,
-        nameSnapshot: menuItem.name,
-        unitPriceSnapshot: menuItem.price,
-        quantity: item.quantity
-      });
-    }
-  });
-  createOrderTx();
-  return { orderId };
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    await saveOrder(
+      {
+        id: orderId,
+        restaurantId: table.restaurantId,
+        tableId: table.id,
+        comment: comment != null ? comment : null,
+        totalKopecks
+      },
+      connection
+    );
+    await saveOrderItems(preparedItems, orderId, connection);
+    await connection.commit();
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 }
 
 const orderItemSchema = z.object({
@@ -3195,7 +3642,7 @@ const index_post = defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const input = createOrderSchema.parse(body);
-    return createOrder(input);
+    return await createOrder(input);
   } catch (error) {
     console.error("Create order error:", error);
     if (error instanceof ZodError) {
@@ -3223,31 +3670,40 @@ const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProper
   default: index_post
 }, Symbol.toStringTag, { value: 'Module' }));
 
-class ValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "ValidationError";
-  }
-}
-
-function getTableMenu(token) {
-  const table = findTableByToken(token);
+async function getTableMenu(token) {
+  const table = await findTableByToken(token);
   if (!table) {
-    throw new Error("Table not found");
+    throw new NotFoundError("Table not found");
   }
-  const items = findMenuByRestaurantId(table.restaurantId);
+  const items = await findMenuByRestaurantId(table.restaurantId);
   return {
     table,
     items
   };
 }
 
-const _token__get = defineEventHandler((event) => {
+const _token__get = defineEventHandler(async (event) => {
   const token = getRouterParam(event, "token");
   if (!token) {
-    throw new ValidationError("Table not found");
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid table token"
+    });
   }
-  return getTableMenu(token);
+  try {
+    return await getTableMenu(token);
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: error.message
+      });
+    }
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Internal server error"
+    });
+  }
 });
 
 const _token__get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

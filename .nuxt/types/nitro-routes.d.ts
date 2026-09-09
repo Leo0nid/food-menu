@@ -9,14 +9,17 @@ declare module "nitropack/types" {
     '/api/orders': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/orders/index.post').default>>>>
     }
-    '/api/table/:token': {
-      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/table/[token].get').default>>>>
+    '/api/tables/:token': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/tables/[token].get').default>>>>
     }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
     }
     '/__nuxt_island/**': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/#internal/nuxt/island-renderer').default>>>>
+    }
+    '/api/_nuxt_icon/:collection': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/icon/dist/runtime/server/api').default>>>>
     }
   }
 }

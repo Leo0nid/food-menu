@@ -1,13 +1,41 @@
-import Database from "better-sqlite3";
-import { join } from "node:path";
-import { existsSync, mkdirSync } from "node:fs";
+import { createPool, type PoolConnection } from "mysql2/promise";
+import { initDb } from "./schema";
 
-const dataDir = join(process.cwd(), "data");
-if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
+const host = process.env.MYSQL_HOST ?? "127.0.0.1";
+const port = Number(process.env.MYSQL_PORT ?? 3306);
+const user = process.env.MYSQL_USER ?? "root";
+const password = process.env.MYSQL_PASSWORD ?? "password";
+const database = process.env.MYSQL_DATABASE ?? "food_menu";
 
-const dbPath = process.env.SQLITE_PATH || join(dataDir, "dev.db");
+export const db = createPool({
+  host,
+  port,
+  user,
+  password,
+  database,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
 
-export const db = new Database(dbPath);
+void initDb().catch((error) => {
+  console.error("Database initialization failed:", error);
+});
 
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+export type DbConnection = PoolConnection;
+
+export async function executeQuery<T = Record<string, unknown>>(
+  sql: string,
+  params?: Array<string | number | boolean | null>,
+  connection?: DbConnection,
+): Promise<T[]> {
+  const values = params ?? [];
+
+  if (connection) {
+    const [rows] = await connection.execute(sql, values);
+    return rows as T[];
+  }
+
+  const [rows] = await db.execute(sql, values);
+  return rows as T[];
+}

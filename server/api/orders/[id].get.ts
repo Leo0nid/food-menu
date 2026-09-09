@@ -1,19 +1,19 @@
 import { createError, defineEventHandler, getRouterParam } from "h3";
-import { getOrder } from "../../core/usecase/order/GetOrderUseCase";
-import { NotFoundError } from "../../core/errors/NotFoundError";
+import { getOrder } from "@usecases/order/GetOrderUseCase";
+import { NotFoundError } from "@errors/NotFoundError";
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, "id");
+
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request",
+    });
+  }
+
   try {
-    const id = getRouterParam(event, "id");
-
-    if (!id) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "Invalid request",
-      });
-    }
-
-    return getOrder(id);
+    return await getOrder(id);
   } catch (error) {
     if (error instanceof NotFoundError) {
       throw createError({

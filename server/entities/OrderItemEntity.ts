@@ -3,6 +3,6 @@ export type OrderItem = {
   orderId: string;
   menuItemId: string;
   nameSnapshot: string;
-  unitPriceSnapshot: number;
+  priceKopecksSnapshot: number;
   quantity: number;
 };

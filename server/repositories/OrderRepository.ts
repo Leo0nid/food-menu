@@ -1,75 +1,86 @@
-import { db } from "../db";
-import { mapOrderRow } from "../mappers/OrderMapper";
-import type { OrderRow } from "../mappers/OrderMapper";
+import { db, executeQuery, type DbConnection } from "@database/index";
+import { mapOrderRow } from "@mappers/OrderMapper";
+import type { OrderDbRow } from "@mappers/OrderMapper";
 
 type InsertOrderParams = {
   id: string;
   restaurantId: string;
   tableId: string;
-  totalPrice: number;
+  totalKopecks: number;
   comment: string | null;
 };
 
-export function insertOrder(params: InsertOrderParams) {
-  return db
-    .prepare(
-      `
+export async function saveOrder(
+  params: InsertOrderParams,
+  connection?: DbConnection,
+): Promise<void> {
+  const executor = connection ?? db;
+  await executor.execute(
+    `
       INSERT INTO orders (
         id,
         restaurant_id,
         table_id,
         status,
         comment,
+        total_kopecks,
         created_at,
         updated_at
       )
-      VALUES (?, ?, ?, 'new', ?, datetime('now'), datetime('now'))
+      VALUES (?, ?, ?, 'new', ?, ?, NOW(), NOW())
     `,
-    )
-    .run(params.id, params.restaurantId, params.tableId, params.comment);
+    [
+      params.id,
+      params.restaurantId,
+      params.tableId,
+      params.comment,
+      params.totalKopecks,
+    ],
+  );
 }
 
-export function findOrderById(id: string) {
-  const row = db
-    .prepare(
-      `
+export async function findOrderById(id: string) {
+  const rows = await executeQuery<OrderDbRow>(
+    `
       SELECT
         id,
         restaurant_id,
         table_id,
         status,
         comment,
+        total_kopecks,
         created_at,
         updated_at
       FROM orders
       WHERE id = ?
     `,
-    )
-    .get(id) as OrderRow | undefined;
+    [id],
+  );
 
+  const row = rows[0];
   if (!row) return undefined;
 
   return mapOrderRow(row);
 }
 
-export function findOrdersByRestaurantId(restaurantId: string) {
-  const rows = db
-    .prepare(
-      `
+export async function findOrdersByRestaurantId(restaurantId: string) {
+  const rows = await executeQuery<OrderDbRow>(
+    `
       SELECT
         id,
         restaurant_id,
         table_id,
         status,
         comment,
+        total_kopecks,
         created_at,
         updated_at
       FROM orders
       WHERE restaurant_id = ?
       ORDER BY created_at DESC
     `,
-    )
-    .all(restaurantId) as OrderRow[];
+    [restaurantId],
+  );
 
   return rows.map(mapOrderRow);
 }

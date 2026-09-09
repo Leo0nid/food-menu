@@ -1,0 +1,5 @@
+# Local AI memory files
+.food-menu-memory.tmp.md
+.env
+.env.*
+.compose.yaml

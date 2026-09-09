@@ -1,14 +1,15 @@
-import { findTableByToken } from "../../../repositories/RestaurantTableRepository";
-import { findMenuByRestaurantId } from "../../../repositories/MenuRepository";
+import { findTableByToken } from "~repositories/RestaurantTableRepository";
+import { findMenuByRestaurantId } from "~repositories/MenuRepository";
+import { NotFoundError } from "@errors/NotFoundError";
 
-export function getTableMenu(token: string) {
-  const table = findTableByToken(token);
+export async function getTableMenu(token: string) {
+  const table = await findTableByToken(token);
 
   if (!table) {
-    throw new Error("Table not found");
+    throw new NotFoundError("Table not found");
   }
 
-  const items = findMenuByRestaurantId(table.restaurantId);
+  const items = await findMenuByRestaurantId(table.restaurantId);
 
   return {
     table,

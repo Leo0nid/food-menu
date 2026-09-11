@@ -1,13 +1,15 @@
 import { randomUUID } from "node:crypto";
 import { db, type DbConnection } from "@database/index";
+import { NotFoundError } from "@errors/NotFoundError";
+import type { MenuItem } from "@entities/MenuItemEntity";
 import { findTableByToken } from "~repositories/RestaurantTableRepository";
 import { findMenuByRestaurantId } from "~repositories/MenuRepository";
 import { saveOrder } from "~repositories/OrderRepository";
 import { saveOrderItem } from "~repositories/OrderItemRepository";
-import type { CreateOrderDTO } from "./dto/CreateOrderDto";
-import { NotFoundError } from "@errors/NotFoundError";
-import type { CreateOrderItemDTO } from "./dto/CreateOrderDto";
-import type { MenuItem } from "@entities/MenuItemEntity";
+import type {
+  CreateOrderDTO,
+  CreateOrderItemDTO,
+} from "./dto/CreateOrderDto";
 
 type PreparedOrderItem = {
   menuItemId: string;
@@ -15,6 +17,50 @@ type PreparedOrderItem = {
   priceKopecksSnapshot: number;
   quantity: number;
 };
+
+export async function createOrder(input: CreateOrderDTO) {
+  const { tableToken, comment, items } = input;
+
+  const table = await findTableByToken(tableToken);
+
+  if (!table) {
+    throw new NotFoundError("Table not found");
+  }
+
+  const menuItems = await findMenuByRestaurantId(table.restaurantId);
+  const menuMap = buildMenuMap(menuItems);
+  const { preparedItems, totalKopecks } = prepareOrderItems(items, menuMap);
+  const orderId = randomUUID();
+
+  const connection = await db.getConnection();
+
+  try {
+    await connection.beginTransaction();
+    await saveOrder(
+      {
+        id: orderId,
+        restaurantId: table.restaurantId,
+        tableId: table.id,
+        comment: comment ?? null,
+        totalKopecks,
+      },
+      connection,
+    );
+
+    await saveOrderItems(preparedItems, orderId, connection);
+    await connection.commit();
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
+
+  return {
+    orderId,
+    totalKopecks,
+  };
+}
 
 function buildMenuMap(menuItems: MenuItem[]) {
   return new Map(menuItems.map((menuItem) => [menuItem.id, menuItem]));
@@ -67,41 +113,3 @@ async function saveOrderItems(
   }
 }
 
-export async function createOrder(input: CreateOrderDTO) {
-  const { tableToken, comment, items } = input;
-
-  const table = await findTableByToken(tableToken);
-
-  if (!table) {
-    throw new NotFoundError("Table not found");
-  }
-
-  const menuItems = await findMenuByRestaurantId(table.restaurantId);
-  const menuMap = buildMenuMap(menuItems);
-  const { preparedItems, totalKopecks } = prepareOrderItems(items, menuMap);
-  const orderId = randomUUID();
-
-  const connection = await db.getConnection();
-
-  try {
-    await connection.beginTransaction();
-    await saveOrder(
-      {
-        id: orderId,
-        restaurantId: table.restaurantId,
-        tableId: table.id,
-        comment: comment ?? null,
-        totalKopecks,
-      },
-      connection,
-    );
-    await saveOrderItems(preparedItems, orderId, connection);
-    await connection.commit();
-  } catch (error) {
-    await connection.rollback();
-    throw error;
-  } finally {
-    connection.release();
-  }
-
-}

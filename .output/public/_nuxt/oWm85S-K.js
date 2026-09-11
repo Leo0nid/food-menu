@@ -1,1 +1,0 @@
-import{_ as s,z as t,A as a,B as o,K as c}from"./Cu8_EMph.js";const l={},n={class:"flex min-h-dvh flex-col bg-white text-black antialiased"},r={class:"flex grow flex-col"};function _(e,d){return t(),a("div",n,[o("main",r,[c(e.$slots,"default")])])}const i=s(l,[["render",_]]);export{i as default};

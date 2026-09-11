@@ -1,5 +1,9 @@
-# Local AI memory files
-.food-menu-memory.tmp.md
+node_modules/
+.nuxt/
+.output/
+
 .env
 .env.*
-.compose.yaml
+!.env.example
+
+.food-menu-memory.tmp.md

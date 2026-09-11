@@ -3,16 +3,28 @@ import { createResolver } from "nuxt/kit";
 
 const { resolve } = createResolver(import.meta.url);
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
+  css: ["~/assets/css/main.css"],
   app: {
     head: {
       meta: [{ name: "robots", content: "noindex, nofollow" }],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@pinia/nuxt"],
+  modules: ["@nuxt/ui", "@pinia/nuxt"],
+  ui: {
+    colorMode: false,
+    fonts: false,
+    theme: {
+      defaultVariants: {
+        color: "neutral",
+      },
+    },
+  },
+  pinia: {
+    storesDirs: ["stores/**"],
+  },
   icon: {
     customCollections: [
       {

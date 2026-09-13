@@ -10,10 +10,12 @@ const emit = defineEmits<{
 
 <template>
   <section
-    class="rounded-2xl border border-neutral-200 p-6 text-center"
+    class="rounded-lg border border-neutral-200 bg-white p-6 text-center"
     role="alert"
   >
-    <h2 class="mb-2 text-lg font-semibold">Что-то пошло не так</h2>
+    <h2 class="mb-2 text-lg font-semibold">
+      Что-то пошло не так
+    </h2>
 
     <p class="mb-5 text-sm text-neutral-500">
       {{ props.message }}

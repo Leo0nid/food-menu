@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <header class="mb-6 flex items-end justify-between gap-6">
+  <div class="w-full">
+    <header class="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p class="mb-2 text-sm text-neutral-500">SeatMe · Панель ресторана</p>
+        <p class="mb-2 text-sm text-neutral-500">
+          SeatMe · Панель ресторана
+        </p>
 
-        <h1 class="mb-1 text-3xl font-bold tracking-tight">Заказы</h1>
+        <h1 class="mb-1 text-3xl font-bold tracking-tight">
+          Заказы
+        </h1>
 
         <p class="text-sm text-neutral-500">
           Следите за текущими заказами ресторана
@@ -22,18 +26,15 @@
       </UButton>
     </header>
 
-    <AdminOrdersSummary :items="orderSummary" />
-
-    <div
-      v-if="status === 'pending'"
-      class="grid items-start gap-5 lg:grid-cols-2 xl:grid-cols-3"
-    >
-      <UCard v-for="item in 6" :key="item">
-        <USkeleton class="mb-5 h-5 w-32" />
-        <USkeleton class="mb-3 h-7 w-24" />
-        <USkeleton class="mb-2 h-4 w-full" />
-        <USkeleton class="h-4 w-2/3" />
-      </UCard>
+    <div v-if="status === 'pending'" class="overflow-x-auto pb-2">
+      <div class="grid min-w-[996px] grid-cols-4 items-start gap-3">
+        <UCard v-for="item in 4" :key="item">
+          <USkeleton class="mb-5 h-5 w-32" />
+          <USkeleton class="mb-3 h-7 w-24" />
+          <USkeleton class="mb-2 h-4 w-full" />
+          <USkeleton class="h-4 w-2/3" />
+        </UCard>
+      </div>
     </div>
 
     <UiErrorState
@@ -42,24 +43,12 @@
       @retry="refresh()"
     />
 
-    <section
-      v-else-if="orders?.length"
-      class="grid items-start gap-5 lg:grid-cols-2 xl:grid-cols-3"
-      aria-label="Список заказов"
-    >
-      <AdminOrdersCard
-        v-for="details in orders"
-        :key="details.order.id"
-        :details="details"
-      />
-    </section>
+    <AdminOrdersBoard v-else :orders="orders ?? []" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { OrderDetails } from "~/types/order/order-details";
-
-type OrderStatus = OrderDetails["order"]["status"];
 
 definePageMeta({
   layout: "admin",
@@ -79,19 +68,4 @@ const {
 } = await useFetch<OrderDetails[]>(() => {
   return `/api/restaurants/${restaurantId.value}/orders`;
 });
-
-const orderSummary = computed(() => {
-  return [
-    { label: "Всего заказов", value: orders.value?.length ?? 0 },
-    { label: "Новые", value: countOrdersByStatus("new") },
-    { label: "Готовятся", value: countOrdersByStatus("cooking") },
-    { label: "Готовы", value: countOrdersByStatus("ready") },
-  ];
-});
-
-function countOrdersByStatus(status: OrderStatus): number {
-  return (orders.value ?? []).filter((item) => {
-    return item.order.status === status;
-  }).length;
-}
 </script>
